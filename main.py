@@ -39,30 +39,78 @@ def get_scoreboard():
         print(f"{clock} - {period['current']}")
 
 
-def get_ppg():
+def get_teams():
     """
-    Team rank of Point Per Game
+    return a list of NBA teams
     """
     stats = get_links()['leagueTeamStatsLeaders']
     teams = get(
         BASE_URL + stats).json()['league']['standard']['regularSeason']['teams']
 
-    teams = list(filter(lambda x: x['name'] != "Team", teams))       # filter out teams with name starting with Team
-    printer.pprint(teams)
+    teams = list(filter(lambda x: x['name'] != "Team", teams))
+    return teams
+
+
+def get_ppg():
+    """
+    Team rank of Point Per Game
+    """
+    teams = get_teams()
     teams.sort(key=lambda x: int(x['ppg']['rank']))
 
     print("--------------------------------------")
     print("Point Per Game Rank")
-    print('   Team -\t Nickname -   PPG')
+    print('  \t Team    -   \t  PPG')
     for i, team in enumerate(teams):
         name = team['name']
         nickname = team['nickname']
+        team_name = name + ' ' + nickname
         ppg = team['ppg']['avg']
-        print(f"{i + 1}. {name} - {nickname} - {ppg}")
+        print(f"{i + 1}. {team_name} - {ppg}")
+
+
+def get_assist():
+    """
+    Team rank of average assists
+    """
+    teams = get_teams()
+    printer.pprint(teams)
+    teams.sort(key=lambda x: int(x['apg']['rank']))
+
+    print("--------------------------------------")
+    print("Assist Per Game")
+    print('   \t Team       -    \t AST')
+    for i, team in enumerate(teams):
+        name = team['name']
+        nickname = team['nickname']
+        team_name = name + ' ' + nickname
+        ast = team['apg']['avg']
+        print(f"{i + 1}. {team_name} - {ast}")
+
+
+def get_rebound():
+    """
+    Team rank of average rebound
+    """
+    teams = get_teams()
+    printer.pprint(teams)
+    teams.sort(key=lambda x: int(x['trpg']['rank']))
+
+    print("--------------------------------------")
+    print("Rebound Per Game")
+    print('  \t Team    -     \t Rebound')
+    for i, team in enumerate(teams):
+        name = team['name']
+        nickname = team['nickname']
+        team_name = name + ' ' + nickname
+        reb = team['trpg']['avg']
+        print(f"{i + 1}. {team_name} - {reb}")
 
 
 if __name__ == '__main__':
     # get_links()
     # get_scoreboard()
-    get_ppg()
+    # get_ppg()
+    # get_assist()
+    get_rebound()
 
