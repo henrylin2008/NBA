@@ -106,11 +106,69 @@ def get_rebound():
         reb = team['trpg']['avg']
         print(f"{i + 1}. {team_name} - {reb}")
 
+def get_block():
+    """
+    Team's average blocks per game
+    """
+    teams = get_teams()
+    printer.pprint(teams)
+    teams.sort(key=lambda x: int(x['bpg']['rank']))
+
+    print("--------------------------------------")
+    print("Rebound Per Game")
+    print('  \t Team    -     \t Rebound')
+    for i, team in enumerate(teams):
+        name = team['name']
+        nickname = team['nickname']
+        team_name = name + ' ' + nickname
+        blk = team['bpg']['avg']
+        print(f"{i + 1}. {team_name} - {blk}")
+
+
+def get_efficiency():
+    """
+    Team's Efficiency
+    """
+    teams = get_teams()
+    printer.pprint(teams)
+    teams.sort(key=lambda x: int(x['eff']['rank']))
+
+    print("--------------------------------------")
+    print("Rebound Per Game")
+    print('  \t Team    -     \t Rebound')
+    for i, team in enumerate(teams):
+        name = team['name']
+        nickname = team['nickname']
+        team_name = name + ' ' + nickname
+        eff = team['eff']['avg']
+        print(f"{i + 1}. {team_name} - {eff}")
+
+
+def get_fgp():
+    """
+    Team's Efficiency
+    """
+    teams = get_teams()
+    printer.pprint(teams)
+    teams.sort(key=lambda x: int(x['fgp']['rank']))
+
+    print("--------------------------------------")
+    print("Field Goals %")
+    print('  \t Team    -     \t FG%')
+    for i, team in enumerate(teams):
+        name = team['name']
+        nickname = team['nickname']
+        team_name = name + ' ' + nickname
+        fgp = int(float(team['fgp']['avg'])*100)
+        print(f"{i + 1}. {team_name} - {fgp}")
+
 
 if __name__ == '__main__':
     # get_links()
     # get_scoreboard()
     # get_ppg()
     # get_assist()
-    get_rebound()
-
+    # get_rebound()
+    # get_block()
+    # get_efficiency()
+    get_fgp()
